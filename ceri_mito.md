@@ -18,3 +18,8 @@ Making the blast database:
 > makeblastdb -in ceri_pol7.fasta -out mito_things/ceri_db -dbtype nucl  
 
 That was the easy part. Now I need to find the sequences that folks expect to be on a cnidarian mitochondrial genome.  
+
+For these, I'm mostly looking in Kayal et al. 2013, where they have a huge table of these accession numbers. I grabbed the ones they had listed in their methods, but am also taking some from each group of anthozoans. Since this is just a first pass, I'm going to take 3-4 from each group and see how that goes.
+
+There are some that I downloaded and they were fastq files instead of fasta, so I converted those with the fastx toolkit, like this:
+> fastq_to_fasta -i SRR8109825.fastq -o SRR8109825.fa
