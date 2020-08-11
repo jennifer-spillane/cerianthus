@@ -20,3 +20,18 @@ First, the normal assembly process (using "fuzzy" de Bruijn graphs):
 
 Then, the consenser:  
 > /mnt/lustre/macmaneslab/macmanes/wtdbg2/wtpoa-cns -t 24 -i ceri_assembly.ctg.lay.gz -fo ceri_assembly.ctg.fa
+
+That finished overnight some time (started midday-ish), so now I'll move on to some quality checks!
+
+### Quality Checks
+
+First I'm running quast, as it should give me some good contiguity numbers without being polished. I'll check them again after polishing to make sure nothing changed that dramatically.
+
+Quast command:
+> quast ceri_assembly.ctg.fa -o quast_raw_assembly -t 24
+
+Quast results:
+Largest contig        2254400
+Total length          491647159
+GC (%)                35.44
+N50                   396334
