@@ -11,7 +11,7 @@ In Stampar et al. 2019, they say they isolated the mito genome by:
 Then they did some validating and checking the stats of their new assemblies, but let's just tackle these first steps first.  
 
 
-My genome is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/reassembly/ceri_pol7.fasta  
+The old genome is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/reassembly/ceri_pol7.fasta and I'll use this one for now, until the new one is shiny and polished.  
 I've made a new directory within "reassembly" to house these mitochondrial explorations: /mnt/lustre/macmaneslab/jlh1023/cerianthid/reassembly/mito_things/
 
 Making the blast database:  
@@ -23,3 +23,5 @@ For these, I'm mostly looking in Kayal et al. 2013, where they have a huge table
 
 There are some that I downloaded and they were fastq files instead of fasta, so I converted those with the fastx toolkit, like this:
 > fastq_to_fasta -i SRR8109825.fastq -o SRR8109825.fa
+
+The spreadsheet mito_genes has the information about all of the sequences I downloaded.  
