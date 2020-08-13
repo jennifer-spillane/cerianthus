@@ -23,7 +23,9 @@ Cite it here: Ruan, J. and Li, H. (2019) Fast and accurate long-read assembly wi
 Github here: https://github.com/ruanjue/wtdbg2   
 
 First, the normal assembly process (using "fuzzy" de Bruijn graphs):
-`/mnt/lustre/macmaneslab/macmanes/wtdbg2/wtdbg2 -x ont -g 544m -t 24 -i ceri234.fastq.gz -fo ceri_assembly`
+`/mnt/lustre/macmaneslab/macmanes/wtdbg2/wtdbg2 -x ont -g 544m -t 24 -i ceri234.fastq.gz -fo ceri_assembly`  
+
+I'm using 544mb as the estimated genome size, since that's what I got when I assembled it before using flye.
 
 Then, the consenser:  
 `/mnt/lustre/macmaneslab/macmanes/wtdbg2/wtpoa-cns -t 24 -i ceri_assembly.ctg.lay.gz -fo ceri_assembly.ctg.fa`
@@ -66,7 +68,6 @@ Median scaffold size      15663
 N50 scaffold length     396334
 
 
-
 Next I'll run busco, which I'm expecting to go pretty poorly. First, because running busco on a genome is a huge pain, and second, because these are error-prone nanopore reads, so it probably won't be able to recognize much.
 
 
@@ -75,30 +76,65 @@ Next I'll run busco, which I'm expecting to go pretty poorly. First, because run
 
 I'll use the Illumina reads that we have (genomic and transcriptomic) to polish the error-y nanopore reads. I'm also pretty much stealing this procedure from when I did it before, but with the updated assembly.  
 
-1. I'm running bwa to get an index of the assembly
-`bwa index -p ceri_index1 ceri_assembly.ctg.fa`
+To make sure I'm not taking up any more space than I need to, I'm deleting any sam files at the end immediately, and getting rid of the bam files as soon as I'm finished polishing.  
 
-The "ceri_index" is what the output file will be called, and the "assembly_flye/scaffolds.fasta" is what you want it to index.
-This is contained in the script located here:
-/mnt/lustre/macmaneslab/jlh1023/cerianthid/reassembly/index.sh
+These first two steps will be run in a script called "bwa1.sh", with each iteration having a different number.
+
+1. I'm running bwa to get an index of the assembly
+`bwa index -p index1 ceri_assembly.ctg.fa`
+
+The "index1" is what the output file will be called, and the "ceri_assembly.ctg.fa" is what I want it to index.
 
 2. And then aligning the reads using bwa
->bwa mem -t 24 \
-ceri_index \
-/mnt/lustre/macmaneslab/jlh1023/cerianthid/ceri_illreads/ceri_1.fastq.gz \
-/mnt/lustre/macmaneslab/jlh1023/cerianthid/ceri_illreads/ceri_2.fastq.gz \
+`bwa mem -t 24 index1 \
+/net/storage03/backup/archive/macmanes/reads/cerianthus/absolutely_everything_1.fq.gz \
+/net/storage03/backup/archive/macmanes/reads/cerianthus/absolutely_everything_2.fq.gz \
 | samtools view -@20 -Sb - \
-| samtools sort -T ceri -O bam -@20 -l9 -m2G -o ceri.sorted.bam -
-samtools index ceri.sorted.bam
+| samtools sort -T ceri -O bam -@20 -l9 -m2G -o ceri1.sorted.bam -
+samtools index ceri1.sorted.bam`
 
-You'll need the name of the index, "ceri_index", the reads that you are going to use "ceri_1.fastq.gz" and the reverse ones, then the name of the output (twice) "ceri_sorted.bam"
-Contained in the script located here:
-/mnt/lustre/macmaneslab/jlh1023/cerianthid/reassembly/get_bam.sh
+I'll need the name of the index, "index1", the reads that I am going to use "absolutely_everything_1.fq.gz" (and the reverse ones), then the name of the output (twice) "ceri1_sorted.bam".  
 
+3. Polishing using Pilon. The prelims for polishing and the polishing itself are contained in a script called "pilon1.sh".  
 
-get rid of sam files immediately
-need bam files for polishing
+Pilon docs: https://github.com/broadinstitute/pilon/wiki  
+Pilon citation: Bruce J. Walker, Thomas Abeel, Terrance Shea, Margaret Priest, Amr Abouelliel, Sharadha Sakthikumar, Christina A. Cuomo, Qiandong Zeng, Jennifer Wortman, Sarah K. Young, Ashlee M. Earl (2014) Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. PLoS ONE 9(11): e112963. doi:10.1371/journal.pone.0112963  
 
-zcat ceri_all_reads_1.fastq.gz ceri_rna_reads_1.fq.gz > absolutely_everything_1.fq.gz
+I'll need a list of all the contig names in the genome, and they can't have the normal ">" in front of them, so I'll remove that.  
+`grep ">" ceri_assembly.ctg.fa > contig_names1.txt`  
+`sed -i 's_>__' contig_names1.txt`  
 
-ceri_all_reads_1.fastq.gz <- used last time I polished.
+Then I can split the contig names into chunks that I can run on multiple machines.  
+`shuf contig_names1.txt | split -d -l 200 - genomechunk.; rename 's/.0{1,}([0-9]+)/_$1/' genomechunk.*`
+
+The first 10 genome chunks will have to be renamed because pilon doesn't like the double digit number. I'll also take this opportunity to move them into a new directory called "chunks1" to keep things more organized.
+`mv genomechunk.01 genomechunk.1`
+
+And now I can do the actual polishing step.   
+`echo "SLURM_JOBID: " $SLURM_JOBID
+echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID
+
+java -jar -Xmx100G /mnt/lustre/macmaneslab/shared/spillane/pilon-1.23.jar \
+--genome /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_assembly.ctg.fa \
+--bam /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri1.sorted.bam \
+--output pilonchunk.$SLURM_ARRAY_TASK_ID \
+--fix bases,gaps \
+--diploid \
+--threads 24 \
+--flank 5 \
+--verbose \
+--mingap 1 \
+--nostrays \
+--targets /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/chunks1/genomechunk.$SLURM_ARRAY_TASK_ID`
+
+Pilon will spit out it's own log files for every chunk, as well as output files that start with "pilonchunk" and have numbers that correspond with the genomechunk numbers. These should be catted together at the end, to form the next version of the genome:  
+`cat pilonchunk.* > ceri_pol1.fasta`  
+
+Then I'm also going to move all the individual pilonchunk output files into a new directory so that they aren't just everywhere.  
+`mkdir pilon_output1
+mv pilonchunk.* pilon_output1/`  
+
+And now the process can start over again.
+Starting up at the "Polishing" heading, with the new version of the assembly.
+Should be run until BUSCO values start to level off and we aren't really gaining any new info.
