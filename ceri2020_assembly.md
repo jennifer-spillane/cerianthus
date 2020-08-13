@@ -80,7 +80,11 @@ To make sure I'm not taking up any more space than I need to, I'm deleting any s
 
 These first two steps will be run in a script called "bwa1.sh", with each iteration having a different number.
 
-1. I'm running bwa to get an index of the assembly
+BWA version: 0.7.17-r1188  
+BWA docs: http://bio-bwa.sourceforge.net/bwa.shtml  
+BWA citation: Li H. and Durbin R. (2009) Fast and accurate short read alignment with Burrows-Wheeler Transform. Bioinformatics, 25:1754-60. [PMID: 19451168]  
+
+1. I'm running bwa to get an index of the assembly  
 `bwa index -p index1 ceri_assembly.ctg.fa`
 
 The "index1" is what the output file will be called, and the "ceri_assembly.ctg.fa" is what I want it to index.
