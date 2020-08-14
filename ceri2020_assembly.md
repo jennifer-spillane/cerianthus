@@ -89,7 +89,7 @@ BWA citation: Li H. and Durbin R. (2009) Fast and accurate short read alignment 
 
 The "index1" is what the output file will be called, and the "ceri_assembly.ctg.fa" is what I want it to index.
 
-2. And then aligning the reads using bwa
+2. And then aligning the reads using bwa  
 `bwa mem -t 24 index1 \
 /net/storage03/backup/archive/macmanes/reads/cerianthus/absolutely_everything_1.fq.gz \
 /net/storage03/backup/archive/macmanes/reads/cerianthus/absolutely_everything_2.fq.gz \
@@ -111,7 +111,7 @@ I'll need a list of all the contig names in the genome, and they can't have the 
 Then I can split the contig names into chunks that I can run on multiple machines.  
 `shuf contig_names1.txt | split -d -l 200 - genomechunk.`
 
-The first 10 genome chunks will have to be renamed because pilon doesn't like the double digit number. I'll also take this opportunity to move them into a new directory called "chunks1" to keep things more organized.
+The first 10 genome chunks will have to be renamed because pilon doesn't like the double digit number. I'll also take this opportunity to move them into a new directory called "chunks1" to keep things more organized.  
 `mkdir chunks1
 rename genomechunk.0 genomechunk. genomechunk.0*
 mv genomechunk* chunks1/`
