@@ -119,9 +119,9 @@ mv genomechunk* chunks1/`
 And now I can do the actual polishing step.   
 `echo "SLURM_JOBID: " $SLURM_JOBID
 echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID
+echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID`
 
-java -jar -Xmx100G /mnt/lustre/macmaneslab/shared/spillane/pilon-1.23.jar \
+`java -jar -Xmx100G /mnt/lustre/macmaneslab/shared/spillane/pilon-1.23.jar \
 --genome /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_assembly.ctg.fa \
 --bam /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri1.sorted.bam \
 --output pilonchunk.$SLURM_ARRAY_TASK_ID \
