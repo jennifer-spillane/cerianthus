@@ -104,15 +104,17 @@ I'll need the name of the index, "index1", the reads that I am going to use "abs
 Pilon docs: https://github.com/broadinstitute/pilon/wiki  
 Pilon citation: Bruce J. Walker, Thomas Abeel, Terrance Shea, Margaret Priest, Amr Abouelliel, Sharadha Sakthikumar, Christina A. Cuomo, Qiandong Zeng, Jennifer Wortman, Sarah K. Young, Ashlee M. Earl (2014) Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. PLoS ONE 9(11): e112963. doi:10.1371/journal.pone.0112963  
 
-I'll need a list of all the contig names in the genome, and they can't have the normal ">" in front of them, so I'll remove that.  
-`grep ">" ceri_assembly.ctg.fa > contig_names1.txt`  
-`sed -i 's_>__' contig_names1.txt`  
+I'll need a list of all the contig names in the genome, and they can't have the normal ">" in front of them, so I'll remove that. I'll also remove the length info that is sitting behind the names.  
+`grep ">" ceri_assembly.ctg.fa | sed 's_>__' | awk '{print $1}' > contig_names1.txt`  
+
 
 Then I can split the contig names into chunks that I can run on multiple machines.  
-`shuf contig_names1.txt | split -d -l 200 - genomechunk.; rename 's/.0{1,}([0-9]+)/_$1/' genomechunk.*`
+`shuf contig_names1.txt | split -d -l 200 - genomechunk.`
 
 The first 10 genome chunks will have to be renamed because pilon doesn't like the double digit number. I'll also take this opportunity to move them into a new directory called "chunks1" to keep things more organized.
-`mv genomechunk.01 genomechunk.1`
+`mkdir chunks1
+rename genomechunk.0 genomechunk. genomechunk.0*
+mv genomechunk* chunks1/`
 
 And now I can do the actual polishing step.   
 `echo "SLURM_JOBID: " $SLURM_JOBID
