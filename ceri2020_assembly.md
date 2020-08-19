@@ -145,8 +145,47 @@ And now the process can start over again.
 Starting up at the "Polishing" heading, with the new version of the assembly.
 Should be run until BUSCO values start to level off and we aren't really gaining any new info.
 
-*annoying thing to watch out for*  
+**annoying thing to watch out for**   
 
 At one point during the polishing stage, there was something wrong with the genomechunks I made. A couple of them had headers inside that had strings of nucleotides in front of them, as if the previous sequence had not had a linefeed at the end, and when I grepped for the > symbol, it was grabbing these sequences also. Then pilon would choke on that entire genomechunk file, and give me back only a subset of results files, which obviously was not going to work. I tried removing those strings of nucleotides, but when I reran pilon, the full assembly still wasn't the size that it should have been, even though there were the correct number of output files. So some sequences were getting lost somewhere.  
 
 In the end, I made new genomechunks in exactly the same way as before, and did not have the same problem again. This is not a very satisfactory conclusion, but it is working again, so hopefully if the same thing happens later in the polishing phase, I can just do the same thing.  
+
+
+
+### Mapping  
+
+BUSCO is in the process of being updated, so those results will be forthcoming. In the meantime, I'll look at mapping rates to try to see the polishing quality level off a bit.  
+
+All of these get run with a really basic command, just replacing the argument with the bam file of choice.  
+`samtools flagstat ceri1.sorted.bam`
+
+**Mapping the Illumina reads to the raw assembly**  
+416799478 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+54998830 + 0 supplementary
+0 + 0 duplicates
+413696158 + 0 mapped (99.26% : N/A)
+361800648 + 0 paired in sequencing
+180900324 + 0 read1
+180900324 + 0 read2
+320358916 + 0 properly paired (88.55% : N/A)
+357486390 + 0 with itself and mate mapped
+1210938 + 0 singletons (0.33% : N/A)
+34328800 + 0 with mate mapped to a different chr
+18734079 + 0 with mate mapped to a different chr (mapQ>=5)  
+
+**Mapping the Illumina reads to the first polishing iteration**  
+413531825 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+51731177 + 0 supplementary
+0 + 0 duplicates
+410750464 + 0 mapped (99.33% : N/A)
+361800648 + 0 paired in sequencing
+180900324 + 0 read1
+180900324 + 0 read2
+325200186 + 0 properly paired (89.88% : N/A)
+358001758 + 0 with itself and mate mapped
+1017529 + 0 singletons (0.28% : N/A)
+30026094 + 0 with mate mapped to a different chr
+16015076 + 0 with mate mapped to a different chr (mapQ>=5)  
