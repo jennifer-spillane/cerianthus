@@ -99,24 +99,23 @@ samtools index ceri1.sorted.bam`
 
 I'll need the name of the index, "index1", the reads that I am going to use "absolutely_everything_1.fq.gz" (and the reverse ones), then the name of the output (twice) "ceri1_sorted.bam".  
 
-3. Polishing using Pilon. The prelims for polishing and the polishing itself are contained in a script called "pilon1.sh".  
-
-Pilon docs: https://github.com/broadinstitute/pilon/wiki  
-Pilon citation: Bruce J. Walker, Thomas Abeel, Terrance Shea, Margaret Priest, Amr Abouelliel, Sharadha Sakthikumar, Christina A. Cuomo, Qiandong Zeng, Jennifer Wortman, Sarah K. Young, Ashlee M. Earl (2014) Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. PLoS ONE 9(11): e112963. doi:10.1371/journal.pone.0112963  
-
-I'll need a list of all the contig names in the genome, and they can't have the normal ">" in front of them, so I'll remove that. I'll also remove the length info that is sitting behind the names.  
+3. I'll need a list of all the contig names in the genome, and they can't have the normal ">" in front of them, so I'll remove that. I'll also remove the length info that is sitting behind the names.  
 `grep ">" ceri_assembly.ctg.fa | sed 's_>__' | awk '{print $1}' > contig_names1.txt`  
 
-
-Then I can split the contig names into chunks that I can run on multiple machines.  
+4. Then I can split the contig names into chunks that I can run on multiple machines.  
 `shuf contig_names1.txt | split -d -l 200 - genomechunk.`
 
-The first 10 genome chunks will have to be renamed because pilon doesn't like the double digit number. I'll also take this opportunity to move them into a new directory called "chunks1" to keep things more organized.  
+5. The first 10 genome chunks will have to be renamed because pilon doesn't like the double digit number. I'll also take this opportunity to move them into a new directory called "chunks1" to keep things more organized.  
 `mkdir chunks1
 rename genomechunk.0 genomechunk. genomechunk.0*
 mv genomechunk* chunks1/`
 
-And now I can do the actual polishing step.   
+6. Originally I had steps 3-5 in the script with pilon also, but this ends up being problematic because of the way that the pilon job gets split up and run again and again. So I just do those steps manually, and then the pilon step is in a script called "pilon1.sh".   
+
+Pilon docs: https://github.com/broadinstitute/pilon/wiki  
+Pilon citation: Bruce J. Walker, Thomas Abeel, Terrance Shea, Margaret Priest, Amr Abouelliel, Sharadha Sakthikumar, Christina A. Cuomo, Qiandong Zeng, Jennifer Wortman, Sarah K. Young, Ashlee M. Earl (2014) Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. PLoS ONE 9(11): e112963. doi:10.1371/journal.pone.0112963  
+
+And now I can do the actual polishing step (pilon1.sh).   
 `echo "SLURM_JOBID: " $SLURM_JOBID
 echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID`
@@ -134,13 +133,20 @@ echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID`
 --nostrays \
 --targets /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/chunks1/genomechunk.$SLURM_ARRAY_TASK_ID`
 
-Pilon will spit out it's own log files for every chunk, as well as output files that start with "pilonchunk" and have numbers that correspond with the genomechunk numbers. These should be catted together at the end, to form the next version of the genome:  
+
+7. Pilon will spit out it's own log files for every chunk, as well as output files that start with "pilonchunk" and have numbers that correspond with the genomechunk numbers. These should be catted together at the end, to form the next version of the genome:  
 `cat pilonchunk.* > ceri_pol1.fasta`  
 
-Then I'm also going to move all the individual pilonchunk output files into a new directory so that they aren't just everywhere.  
+8. Then I'm also going to move all the individual pilonchunk output files into a new directory so that they aren't just everywhere.  
 `mkdir pilon_output1
 mv pilonchunk.* pilon_output1/`  
 
 And now the process can start over again.
 Starting up at the "Polishing" heading, with the new version of the assembly.
 Should be run until BUSCO values start to level off and we aren't really gaining any new info.
+
+*annoying thing to watch out for*  
+
+At one point during the polishing stage, there was something wrong with the genomechunks I made. A couple of them had headers inside that had strings of nucleotides in front of them, as if the previous sequence had not had a linefeed at the end, and when I grepped for the > symbol, it was grabbing these sequences also. Then pilon would choke on that entire genomechunk file, and give me back only a subset of results files, which obviously was not going to work. I tried removing those strings of nucleotides, but when I reran pilon, the full assembly still wasn't the size that it should have been, even though there were the correct number of output files. So some sequences were getting lost somewhere.  
+
+In the end, I made new genomechunks in exactly the same way as before, and did not have the same problem again. This is not a very satisfactory conclusion, but it is working again, so hopefully if the same thing happens later in the polishing phase, I can just do the same thing.  
