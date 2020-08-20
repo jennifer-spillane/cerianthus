@@ -68,8 +68,13 @@ Median scaffold size      15663
 N50 scaffold length     396334
 
 
-Next I'll run busco, which I'm expecting to go pretty poorly. First, because running busco on a genome is a huge pain, and second, because these are error-prone nanopore reads, so it probably won't be able to recognize much.
+**BUSCO results for the first and fourth polished genomes**  
 
+First (ceri_pol1.fasta):  
+C:66.9%[S:66.6%,D:0.3%],F:4.2%,M:28.9%,n:954
+
+Fourth (ceri_pol4.fasta):  
+C:67.2%[S:66.9%,D:0.3%],F:4.7%,M:28.1%,n:954
 
 
 ### Polishing  
