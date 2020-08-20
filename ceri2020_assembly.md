@@ -151,6 +151,7 @@ At one point during the polishing stage, there was something wrong with the geno
 
 In the end, I made new genomechunks in exactly the same way as before, and did not have the same problem again. This is not a very satisfactory conclusion, but it is working again, so hopefully if the same thing happens later in the polishing phase, I can just do the same thing.  
 
+#### The current (8-20-20) "final" iteration of this assembly is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol4.fasta  
 
 
 ### Mapping  
@@ -158,9 +159,9 @@ In the end, I made new genomechunks in exactly the same way as before, and did n
 BUSCO is in the process of being updated, so those results will be forthcoming. In the meantime, I'll look at mapping rates to try to see the polishing quality level off a bit.  
 
 All of these get run with a really basic command, just replacing the argument with the bam file of choice.  
-`samtools flagstat ceri1.sorted.bam`
 
-**Mapping the Illumina reads to the raw assembly**  
+**Mapping the Illumina reads to the raw assembly (ceri_assembly.ctg.fa)**  
+`samtools flagstat ceri1.sorted.bam`  
 416799478 + 0 in total (QC-passed reads + QC-failed reads)
 0 + 0 secondary
 54998830 + 0 supplementary
@@ -175,7 +176,8 @@ All of these get run with a really basic command, just replacing the argument wi
 34328800 + 0 with mate mapped to a different chr
 18734079 + 0 with mate mapped to a different chr (mapQ>=5)  
 
-**Mapping the Illumina reads to the first polishing iteration**  
+**Mapping the Illumina reads to the first polishing iteration (ceri_pol1.fasta)**  
+`samtools flagstat ceri2.sorted.bam`  
 413531825 + 0 in total (QC-passed reads + QC-failed reads)
 0 + 0 secondary
 51731177 + 0 supplementary
@@ -189,3 +191,35 @@ All of these get run with a really basic command, just replacing the argument wi
 1017529 + 0 singletons (0.28% : N/A)
 30026094 + 0 with mate mapped to a different chr
 16015076 + 0 with mate mapped to a different chr (mapQ>=5)  
+
+**Mapping the Illumina reads to the second polishing iteration (ceri_pol2.fasta)**  
+`samtools flagstat ceri3.sorted.bam`  
+412327986 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+50527338 + 0 supplementary
+0 + 0 duplicates
+409567849 + 0 mapped (99.33% : N/A)
+361800648 + 0 paired in sequencing
+180900324 + 0 read1
+180900324 + 0 read2
+325995352 + 0 properly paired (90.10% : N/A)
+358037952 + 0 with itself and mate mapped
+1002559 + 0 singletons (0.28% : N/A)
+29243086 + 0 with mate mapped to a different chr
+15742789 + 0 with mate mapped to a different chr (mapQ>=5)
+
+**Mapping the Illumina reads to the third polishing iteration**  
+`samtools flagstat ceri4.sorted.bam`  
+412031446 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+50230798 + 0 supplementary
+0 + 0 duplicates
+409275511 + 0 mapped (99.33% : N/A)
+361800648 + 0 paired in sequencing
+180900324 + 0 read1
+180900324 + 0 read2
+326283200 + 0 properly paired (90.18% : N/A)
+358045072 + 0 with itself and mate mapped
+999641 + 0 singletons (0.28% : N/A)
+28958524 + 0 with mate mapped to a different chr
+15722413 + 0 with mate mapped to a different chr (mapQ>=5)
