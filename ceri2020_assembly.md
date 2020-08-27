@@ -68,7 +68,7 @@ Median scaffold size      15663
 N50 scaffold length     396334
 
 
-**BUSCO results for the first and fourth polished genomes**  
+**BUSCO results for some of the polishing iterations**  
 
 First (ceri_pol1.fasta):  
 C:66.9%[S:66.6%,D:0.3%],F:4.2%,M:28.9%,n:954
@@ -151,10 +151,14 @@ Starting up at the "Polishing" heading, with the new version of the assembly.
 Should be run until BUSCO values start to level off and we aren't really gaining any new info.
 
 **annoying thing to watch out for**   
-
 At one point during the polishing stage, there was something wrong with the genomechunks I made. A couple of them had headers inside that had strings of nucleotides in front of them, as if the previous sequence had not had a linefeed at the end, and when I grepped for the > symbol, it was grabbing these sequences also. Then pilon would choke on that entire genomechunk file, and give me back only a subset of results files, which obviously was not going to work. I tried removing those strings of nucleotides, but when I reran pilon, the full assembly still wasn't the size that it should have been, even though there were the correct number of output files. So some sequences were getting lost somewhere.  
 
 In the end, I made new genomechunks in exactly the same way as before, and did not have the same problem again. This is not a very satisfactory conclusion, but it is working again, so hopefully if the same thing happens later in the polishing phase, I can just do the same thing.  
+
+**8-21-20 update**  
+I am going to polish once more. I thought that I needed both the forward and reverse reads to polish correctly, but apparently this is not the case, and the RNA-seq data for this organism is heavily biased in favor of forward reads. So I'm going to add those in to the mapping step, generate a new bam file (ceri5_sorted.bam). Just to make sure I'm not missing anything, I'm going to add the total DNA reads (ceri_all_reads) and these new RNA-seq read files (CB_all_rna) and pop them in files called "all_dna_and_rna".  
+
+
 
 #### The current (8-20-20) "final" iteration of this assembly is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol4.fasta  
 
@@ -228,3 +232,19 @@ All of these get run with a really basic command, just replacing the argument wi
 999641 + 0 singletons (0.28% : N/A)
 28958524 + 0 with mate mapped to a different chr
 15722413 + 0 with mate mapped to a different chr (mapQ>=5)
+
+**Mapping the Illumina reads to the fourth polishing iteration - this one also has extra RNA reads**  
+`samtools flagstat ceri4.sorted.bam`  
+411402714 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+49968231 + 0 supplementary
+0 + 0 duplicates
+408651647 + 0 mapped (99.33% : N/A)
+361434483 + 0 paired in sequencing
+180717242 + 0 read1
+180717241 + 0 read2
+326128285 + 0 properly paired (90.23% : N/A)
+357686407 + 0 with itself and mate mapped
+997009 + 0 singletons (0.28% : N/A)
+28754970 + 0 with mate mapped to a different chr
+15655026 + 0 with mate mapped to a different chr (mapQ>=5)
