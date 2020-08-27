@@ -49,10 +49,11 @@ Then I can pull out the sequences with their headers with a context line after t
 
 Each of these is a decent sized bit of sequence, 23-40K long.  
 
-
-### Mapping Explorations  
+#### Mapping Explorations  
 
 I catted the three contigs that I pulled out from the blast results into a single file called "putative_mito_genome.fa" and then tried mapping both the Nanopore reads and Illumina reads back to it.  
+
+These mapping rates are both terrible, but that was sort of to be expected.  
 
 `samtools flagstat mito_nano.sorted.bam`  
 3575675 + 0 in total (QC-passed reads + QC-failed reads)
@@ -83,3 +84,19 @@ I catted the three contigs that I pulled out from the blast results into a singl
 30243 + 0 singletons (0.01% : N/A)
 3496 + 0 with mate mapped to a different chr
 3065 + 0 with mate mapped to a different chr (mapQ>=5)
+
+
+### Looking at isolation a different way  
+
+Since the mito genome was sequenced at the same time as the nuclear genome, but there were many more copies, it is very possible that it has vastly higher coverage than most/all of the nuclear genes. So I'm going to look at coverage as a way of potentially finding pieces of the mito genome.  
+
+First, I calculated the depth of the coverage at every position in the genome assembly with this command:  
+`samtools depth ceri5.sorted.bam > depth_ceri_pol5.tsv`  
+
+Then I realized that this files was way too hilariously large to do much with (17Gb), so I decided to pull out just certain parts of it. I rediscovered a handy script I must have written ages ago that pulls out all of the contigs in a fasta file that are above a certain length. I used this to retain contigs over 1000bp.  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/long_fasta.py -i ceri_pol5.fasta -o long_contigs_ceripol5.fa -l 1000`  
+
+Unfortunately (or fortunately?) it's not clear that there are any contigs that got excluded based on this length threshold, as the resulting file is the same size as the original polished assembly from which it was made. So I subsampled down to 1% of the original file size by only grabbing every 100th line of the file.  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/sub_file.py -i depth_ceri_pol5.tsv -o sub_depth.tsv -n 100`  
+
+This still results in a file that is 165Mb, but it's still a little more manageable. I downloaded this file and changed it to a csv in bbedit (did not trust excel with a file this size) and gave it a header line, and then popped it into R for plotting. The resulting density plot was not really that satisfying (/Users/jenniferlhill/Desktop/Analyses/cerianthid/seq_depth_density.pdf). I did it first with all of the lines of data, but it went out so far as to make the rest unreadable. So I limited the x axis to 2000, and it was a little better, and then I limited it to 1000 so I could actually see what was going on in the rest of it. Sadly, there doesn't seem to be a peak of any kind at the higher depth places, it just trails off gradually forever, so I'm not sure I'll be able to find the mito contigs like this. Still, it might be worth quantifying a little what is going on with the depth at those higher points.  
