@@ -39,7 +39,7 @@ These are the contigs that this blast run matched to the mitochondrial genes fro
 - ctg1506  
 - ctg1842  
 
-2801 matched to a number of sequences, and 1506 matched a few, but 1842 only matched once, to "ENA|JX023264|JX023264.1", which is another cerianthid sequence.  
+2801 matched to a number of sequences, and 1506 matched a few, but 1842 only matched once, to "ENA|JX023264|JX023264.1 Ceriantheopsis americana NADH dehydrogenase subunit 4 (nad4) gene, partial cds; mitochondrial.".  
 
 I pulled out these three contigs into their own separate files, but first had to "fix" the lines of the assembly so that they didn't wrap, which messes with my grepping.  
 `awk '{if(NR==1) {print $0} else {if($0 ~ /^>/) {print "\n"$0} else {printf $0}}}' /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol4.fasta > unwrapped_ceri_pol4.fa`  
@@ -47,4 +47,39 @@ I pulled out these three contigs into their own separate files, but first had to
 Then I can pull out the sequences with their headers with a context line after the match.  
 `grep -A 1 "ctg2801" unwrapped_ceri_pol4.fa > ctg2801.fa`  
 
-Each of these is a decent sized bit of sequence, 23-40K long.
+Each of these is a decent sized bit of sequence, 23-40K long.  
+
+
+### Mapping Explorations  
+
+I catted the three contigs that I pulled out from the blast results into a single file called "putative_mito_genome.fa" and then tried mapping both the Nanopore reads and Illumina reads back to it.  
+
+`samtools flagstat mito_nano.sorted.bam`  
+3575675 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+3356 + 0 supplementary
+0 + 0 duplicates
+9709 + 0 mapped (0.27% : N/A)
+0 + 0 paired in sequencing
+0 + 0 read1
+0 + 0 read2
+0 + 0 properly paired (N/A : N/A)
+0 + 0 with itself and mate mapped
+0 + 0 singletons (N/A : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)  
+
+`samtools flagstat mito_illumina.sorted.bam`  
+361401721 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+25007 + 0 supplementary
+0 + 0 duplicates
+2473248 + 0 mapped (0.68% : N/A)
+361376714 + 0 paired in sequencing
+180688357 + 0 read1
+180688357 + 0 read2
+2412128 + 0 properly paired (0.67% : N/A)
+2417998 + 0 with itself and mate mapped
+30243 + 0 singletons (0.01% : N/A)
+3496 + 0 with mate mapped to a different chr
+3065 + 0 with mate mapped to a different chr (mapQ>=5)
