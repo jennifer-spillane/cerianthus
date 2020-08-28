@@ -99,4 +99,19 @@ Then I realized that this files was way too hilariously large to do much with (1
 Unfortunately (or fortunately?) it's not clear that there are any contigs that got excluded based on this length threshold, as the resulting file is the same size as the original polished assembly from which it was made. So I subsampled down to 1% of the original file size by only grabbing every 100th line of the file.  
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/sub_file.py -i depth_ceri_pol5.tsv -o sub_depth.tsv -n 100`  
 
-This still results in a file that is 165Mb, but it's still a little more manageable. I downloaded this file and changed it to a csv in bbedit (did not trust excel with a file this size) and gave it a header line, and then popped it into R for plotting. The resulting density plot was not really that satisfying (/Users/jenniferlhill/Desktop/Analyses/cerianthid/seq_depth_density.pdf). I did it first with all of the lines of data, but it went out so far as to make the rest unreadable. So I limited the x axis to 2000, and it was a little better, and then I limited it to 1000 so I could actually see what was going on in the rest of it. Sadly, there doesn't seem to be a peak of any kind at the higher depth places, it just trails off gradually forever, so I'm not sure I'll be able to find the mito contigs like this. Still, it might be worth quantifying a little what is going on with the depth at those higher points.  
+This still results in a file that is 165Mb, but it's still a little more manageable. I downloaded this file and changed it to a csv in bbedit (did not trust excel with a file this size) and gave it a header line, and then popped it into R for plotting. The resulting density plot was not really that satisfying (/Users/jenniferlhill/Desktop/Analyses/cerianthid/seq_depth_density.pdf). I did it first with all of the lines of data, but it went out so far as to make the rest unreadable (~8000). So I limited the x axis to 2000, and it was a little better, and then I limited it to 1000 so I could actually see what was going on in the rest of it. Sadly, there doesn't seem to be a peak of any kind at the higher depth places, it just trails off gradually forever, so I'm not sure I'll be able to find the mito contigs like this. Still, it might be worth quantifying a little what is going on with the depth at those higher points.  
+
+I wrote a script that pulls out depth info for entries at or above a user-chosen depth threshold, and ran it:  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/parse_depth.py -i sub_depth.tsv -o deep_contigs.tsv -d 1000`  
+
+There are 4,188,497 lines of information in this sub_depth.tsv file, and 32,241 have sequence depth of 1000 or more. I'm going to up it a bit more to see if we can narrow things a bit.   
+
+Threshold = 1500; lines = 14337  
+Threshold = 2000; lines = 8389  
+Threshold = 2500; lines = 5941  
+
+I know from the plot that it will go pretty high, so I'm going to try one pretty far out.  
+Threshold = 8000; lines = 115  
+At 8500 and 9000 there aren't any, so I'll take a closer look at the ones I have.  
+
+Unfortunately they look like they are from a ton of different contigs, so this is probably not going to be overly helpful for mito contig isolation. I also ran it with the threshold at 8100 (the largest one I could get results for) and it returned 3 contigs, none of which matches the ones I found blasting, so I think this is a dead end.  
