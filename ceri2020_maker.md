@@ -32,3 +32,15 @@ Also in this directory are
 - the Cerianthus genome as it now stands: ceri_pol5.fasta  
 - the maker files: maker_opts.ctl (contains the controls for the maker run) and maker_evm.ctl, maker_bopts.ctl, and maker_exe.ctl (which just need to be in the same directory)  
 - a text file containing a replica of the maker_opts.ctl file, in order to preserve the settings for this maker run for posterity: maker_opts1.txt  
+
+Then I can run it using this code  
+`module purge
+module load anaconda/colsa
+source activate maker-3.01.02
+
+cd /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/
+
+export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/shared/augustus_config/config
+
+mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \
+-fix_nucleotides -base ceri_maker1 --ignore_nfs_tmp`  
