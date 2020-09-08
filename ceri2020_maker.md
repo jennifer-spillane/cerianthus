@@ -44,3 +44,6 @@ export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/shared/augustus_config/confi
 
 mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \
 -fix_nucleotides -base ceri_maker1 --ignore_nfs_tmp`  
+
+During the run to check on the progress, I can use this code to see how many proteins it has so far  
+`fasta_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1`  
