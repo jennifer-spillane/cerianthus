@@ -160,7 +160,7 @@ I am going to polish once more. I thought that I needed both the forward and rev
 
 
 
-#### The current (8-20-20) "final" iteration of this assembly is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol4.fasta  
+#### The current (8-22-20) "final" iteration of this assembly is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol5.fasta  
 
 
 ### Mapping  
