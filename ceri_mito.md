@@ -49,6 +49,16 @@ Then I can pull out the sequences with their headers with a context line after t
 
 Each of these is a decent sized bit of sequence, 23-40K long.  
 
+4. Trying blast again but this time with all individual mitochondrial genes, instead of whole mito genomes. Just want to check if I can get any different scaffolds.  
+
+I remade the blast database, because I have a slightly updated polishing iteration of the genome:  
+`makeblastdb -in /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol5.fasta -out ceri_db2 -dbtype nucl`  
+
+Then blasted all the individual mito genes against it:  
+`blastn -db ceri_db2 -max_target_seqs 1 -query ind_mito_genes/all_mito_genes.fa -outfmt '6 qseqid qlen length pident gaps evalue stitle' -evalue 1e-10 -num_threads 6 -out mito_blast2.out`  
+
+**I got the exact same contigs when I blasted this way, so I'm going to say that this is what we've got unless we think of something else to try**
+
 #### Mapping Explorations  
 
 I catted the three contigs that I pulled out from the blast results into a single file called "putative_mito_genome.fa" and then tried mapping both the Nanopore reads and Illumina reads back to it.  
