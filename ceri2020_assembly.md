@@ -38,6 +38,9 @@ Just for reference, the raw assembly is here: /mnt/lustre/macmaneslab/jlh1023/ce
 
 First I'm running quast, as it should give me some good contiguity numbers without being polished. I'll check them again after polishing to make sure nothing changed that dramatically.
 
+Quast reference: QUAST: Quality assessment tool for genome assemblies  
+Quast version: 4.6.0, 22f3f69   
+
 Quast command:
 `quast ceri_assembly.ctg.fa -o quast_raw_assembly -t 24`
 
@@ -69,6 +72,8 @@ N50 scaffold length     396334
 
 
 **BUSCO results for some of the polishing iterations**  
+
+BUSCO version: 
 
 First (ceri_pol1.fasta):  
 C:66.9%[S:66.6%,D:0.3%],F:4.2%,M:28.9%,n:954
@@ -168,6 +173,9 @@ I am going to polish once more. I thought that I needed both the forward and rev
 BUSCO is in the process of being updated, so those results will be forthcoming. In the meantime, I'll look at mapping rates to try to see the polishing quality level off a bit.  
 
 All of these get run with a really basic command, just replacing the argument with the bam file of choice.  
+
+Samtools version: 1.10  
+Samtools ref:
 
 **Mapping the Illumina reads to the raw assembly (ceri_assembly.ctg.fa)**  
 `samtools flagstat ceri1.sorted.bam`  
