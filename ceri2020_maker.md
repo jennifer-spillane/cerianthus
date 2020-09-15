@@ -47,3 +47,28 @@ mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \
 
 During the run to check on the progress, I can use this code to see how many proteins it has so far  
 `fasta_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1`  
+
+`grep -c ">" ceri_maker1.all.maker.proteins.fasta`
+Number of proteins as of 9-9-20: 17,124  
+Number of proteins as of 9-14-20: 19,236  
+
+
+### Extras  
+
+#### Long BUSCO run  
+
+I am also going to do a run of busco with the "long" setting turned on, so that I can add this to the 2nd maker iteration. (And I finally got busco to run with multiple threads on a genome!)
+
+This is the code I used:
+`export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/config
+
+run_BUSCO.py -i /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/ceri_pol5.fasta \
+-o ceri_pol5_long -m geno -l /mnt/lustre/hcgs/shared/databases/busco/metazoa_odb9 --long -c 40`  
+
+I also have a file called "config.ini" in this same directory, and another directory called "config" that has multiple sub directories (that's where the augustus path leads). Finally got the right combination of things there, and off it goes (busco_long.sh).  
+
+#### Repeat Modeler    
+
+I'll also include a run of RepeatModeler in the next run, code as follows:  
+`BuildDatabase -name ceri ceri_pol7.fasta  
+RepeatModeler -database ceri -pa 40`  
