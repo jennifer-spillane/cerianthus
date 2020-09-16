@@ -73,13 +73,16 @@ N50 scaffold length     396334
 
 **BUSCO results for some of the polishing iterations**  
 
-BUSCO version: 
+BUSCO version: 3.0.0
 
 First (ceri_pol1.fasta):  
-C:66.9%[S:66.6%,D:0.3%],F:4.2%,M:28.9%,n:954
+C:66.9% [S:66.6%, D:0.3%], F:4.2%, M:28.9%, n:954
 
 Fourth (ceri_pol4.fasta):  
-C:67.2%[S:66.9%,D:0.3%],F:4.7%,M:28.1%,n:954
+C:67.2% [S:66.9%, D:0.3%], F:4.7%, M:28.1%, n:954
+
+Fifth (ceri_pol5.fasta), run with the Metazoa dataset:  
+C:87.5% [S:86.5%, D:1.0%], F:3.1%, M:9.4%, n:978
 
 
 ### Polishing  
