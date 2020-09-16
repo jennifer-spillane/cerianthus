@@ -72,3 +72,5 @@ I also have a file called "config.ini" in this same directory, and another direc
 I'll also include a run of RepeatModeler in the next run, code as follows:  
 `BuildDatabase -name ceri ceri_pol7.fasta  
 RepeatModeler -database ceri -pa 40`  
+
+Results for this run can be found here: `/mnt/oldhome/macmaneslab/jlh1023/cerianthid/maker_2020/RM_172934.TueSep151359192020 ( consensi.fa.classified )`
