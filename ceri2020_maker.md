@@ -1,6 +1,6 @@
 ## Running MAKER on the new Cerianthus assembly
 
-I need to run MAKER on my new assembly, so first I am gathering all of the other Cnidarians that I will use in the run. All of these will be in this directory: /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/  
+I need to run MAKER on my new assembly, so first I am gathering all of the other Cnidarians that I will use in the run. All of these will be in this directory: `/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/`  
 
 **Proteins:**  
 - Acropora_digitifera_prot.fa  
@@ -42,8 +42,7 @@ source activate maker-3.01.02`
 
 `export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/shared/augustus_config/config`  
 
-`mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \   
--fix_nucleotides -base ceri_maker1 --ignore_nfs_tmp`  
+`mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker -fix_nucleotides -base ceri_maker1 --ignore_nfs_tmp`  
 
 
 During the run to check on the progress, I can use this code to see how many proteins it has so far  
@@ -63,15 +62,14 @@ I am also going to do a run of busco with the "long" setting turned on, so that 
 This is the code I used:
 `export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/config`
 
-`run_BUSCO.py -i /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/ceri_pol5.fasta \
--o ceri_pol5_long -m geno -l /mnt/lustre/hcgs/shared/databases/busco/metazoa_odb9 --long -c 40`  
+`run_BUSCO.py -i /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/ceri_pol5.fasta -o ceri_pol5_long -m geno -l /mnt/lustre/hcgs/shared/databases/busco/metazoa_odb9 --long -c 40`  
 
 I also have a file called "config.ini" in this same directory, and another directory called "config" that has multiple sub directories (that's where the augustus path leads). Finally got the right combination of things there, and off it goes (busco_long.sh).  
 
 #### Repeat Modeler    
 
 I'll also include a run of RepeatModeler in the next run, code as follows:  
-`BuildDatabase -name ceri ceri_pol7.fasta  
+`BuildDatabase -name ceri ceri_pol5.fasta  
 RepeatModeler -database ceri -pa 40`  
 
 Results for this run can be found here: `/mnt/oldhome/macmaneslab/jlh1023/cerianthid/maker_2020/RM_172934.TueSep151359192020 ( consensi.fa.classified )`
