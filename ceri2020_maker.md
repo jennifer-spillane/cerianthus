@@ -42,15 +42,15 @@ source activate maker-3.01.02`
 
 `export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/shared/augustus_config/config`  
 
-`mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \  
+`mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \   
 -fix_nucleotides -base ceri_maker1 --ignore_nfs_tmp`  
 
 
 During the run to check on the progress, I can use this code to see how many proteins it has so far  
 `fasta_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1`  
 
-`grep -c ">" ceri_maker1.all.maker.proteins.fasta`
-Number of proteins as of 9-9-20: 17,124  
+`grep -c ">" ceri_maker1.all.maker.proteins.fasta`  
+Number of proteins as of 9-9-20: 17,124   
 Number of proteins as of 9-14-20: 19,236  
 
 
