@@ -34,9 +34,9 @@ Also in this directory are
 - a text file containing a replica of the maker_opts.ctl file, in order to preserve the settings for this maker run for posterity: maker_opts1.txt  
 
 Then I can run it using this code  
-`module purge  
-module load anaconda/colsa  
-source activate maker-3.01.02`  
+`module purge`  
+`module load anaconda/colsa`  
+`source activate maker-3.01.02`  
 
 `cd /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/`  
 
@@ -53,7 +53,7 @@ Number of proteins as of 9-9-20: 17,124
 Number of proteins as of 9-14-20: 19,236  
 
 
-### Extras  
+### Extras - for the second run of MAKER  
 
 #### Long BUSCO run  
 
