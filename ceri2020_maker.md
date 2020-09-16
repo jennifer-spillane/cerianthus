@@ -36,14 +36,15 @@ Also in this directory are
 Then I can run it using this code  
 `module purge
 module load anaconda/colsa
-source activate maker-3.01.02
+source activate maker-3.01.02`
 
-cd /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/
+`cd /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/`
 
-export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/shared/augustus_config/config
+`export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/shared/augustus_config/config`
 
-mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \
+`mpiexec -n 48 /mnt/lustre/macmaneslab/macmanes/test/maker/bin/maker \
 -fix_nucleotides -base ceri_maker1 --ignore_nfs_tmp`  
+
 
 During the run to check on the progress, I can use this code to see how many proteins it has so far  
 `fasta_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1`  
@@ -60,9 +61,9 @@ Number of proteins as of 9-14-20: 19,236
 I am also going to do a run of busco with the "long" setting turned on, so that I can add this to the 2nd maker iteration. (And I finally got busco to run with multiple threads on a genome!)
 
 This is the code I used:
-`export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/config
+`export AUGUSTUS_CONFIG_PATH=/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/config`
 
-run_BUSCO.py -i /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/ceri_pol5.fasta \
+`run_BUSCO.py -i /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/ceri_pol5.fasta \
 -o ceri_pol5_long -m geno -l /mnt/lustre/hcgs/shared/databases/busco/metazoa_odb9 --long -c 40`  
 
 I also have a file called "config.ini" in this same directory, and another directory called "config" that has multiple sub directories (that's where the augustus path leads). Finally got the right combination of things there, and off it goes (busco_long.sh).  
