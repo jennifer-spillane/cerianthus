@@ -2,6 +2,10 @@
 
 I need to run MAKER on my new assembly, so first I am gathering all of the other Cnidarians that I will use in the run. All of these will be in this directory: `/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/`  
 
+Maker version: 3.01.02  
+Maker docs: http://weatherby.genetics.utah.edu/MAKER/wiki/index.php/MAKER_Tutorial_for_WGS_Assembly_and_Annotation_Winter_School_2018#MAKER.27s_Output  
+Maker ref: MAKER: an easy-to-use annotation pipeline designed for emerging model organism genomes.  
+
 **Proteins:**  
 - Acropora_digitifera_prot.fa  
 - Acropora_millepora_prot.fa  
