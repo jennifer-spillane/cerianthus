@@ -1,6 +1,6 @@
 ## Cerianthid assembly 2020
 
-It was a little while ago that I did the initial assembly for this genome (before I had to set it aside for a while), so I am going to reassemble it now with updated methdods, and see if it's any better than my old one. Should be fun!  
+It was a little while ago that I did the initial assembly for this genome (before I had to set it aside for a while), so I am going to reassemble it now with updated methods, and see if it's any better than my old one. Should be fun!  
 
 I made a new directory to do this work in, and it is here: `/mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/`
 
