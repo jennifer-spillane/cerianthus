@@ -112,3 +112,5 @@ Settings in the maker_opts.ctl file that I changed (these settings are preserved
 ### BUSCO scores for iterations of MAKER  
 
 I'm only planning two MAKER runs, but if the busco scores are quite different between them, then I'll know it might make more sense to keep going.  
+
+After I ran the ending stuff (right before "extras", above), I ran busco on the "ceri_maker1.all.maker.proteins.fasta" file, and it was unfortunately, a little lower than I'd hoped. The complete BUSCO score is 53.6% for the euk database, and 55.1% for the met one. Sadly, this is probably because the transcriptomic reads we have for this species are so bad and/or incomplete, and there isn't a ton we can do about that.  
