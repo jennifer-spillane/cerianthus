@@ -114,3 +114,13 @@ Settings in the maker_opts.ctl file that I changed (these settings are preserved
 I'm only planning two MAKER runs, but if the busco scores are quite different between them, then I'll know it might make more sense to keep going.  
 
 After I ran the ending stuff (right before "extras", above), I ran busco on the "ceri_maker1.all.maker.proteins.fasta" file, and it was unfortunately, a little lower than I'd hoped. The complete BUSCO score is 53.6% for the euk database, and 55.1% for the met one. Sadly, this is probably because the transcriptomic reads we have for this species are so bad and/or incomplete, and there isn't a ton we can do about that.  
+
+### Adding in transcriptomes  
+
+Paper just came out (Klompen, Macrander, Reitzel, and Stampar) that published four cerianthid transcriptomes, including ours! So I downloaded all the reads to a new directory (/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/transcriptomes).  
+
+Then I ran the ORP on them using scripts like this "Isarachnanthus_nocturnus_orp.sh", and then I took the resulting transcriptomes, and popped them into the newest run of MAKER. The Pachycerianthus borealis one is in the "est" section, and the other three are in the "altest" section. I think having more closely related organisms and a better transcriptome is going to help a ton.  
+
+I stopped the second run because I hadn't spread it across enough nodes, and it will have to run the first steps again too, which is unfortunate, but hopefully it won't take as long as last time.  
+
+So the most up-to-date MAKER run is running from the script "maker_mpi.sh" in the same directory as all the others, but it will be spitting out files with "ceri_maker3" as the prefix, even though it's really more like 2.5.  
