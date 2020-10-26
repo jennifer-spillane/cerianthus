@@ -61,17 +61,17 @@ Number of proteins as of 9-18-20: 22,841
 Number of proteins at the end: 29,554  (Woo!)  
 
 When this is finished (it took a long time because I put in basically every Cnid I could find), I ran the lines of code below in a script called "maker_end.sh". This is what generates all the output files I'll need to evaluate the run, etc. The first one is the one I used to check on the number of proteins as the run went along, but there are many more.   
-`fasta_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1`
-`gff3_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1.gff3 -n`
-`sed -i '/^>/! s/-/N/g' ceri_maker1.all.maker.proteins.fasta`
-`lastal -P38 /mnt/lustre/macmaneslab/macmanes/transporters/swissprot ceri_maker1.all.maker.proteins.fasta -f BlastTab > blast.out`
-`maker_functional_fasta /mnt/lustre/macmaneslab/macmanes/transporters/uniprot_sprot.fasta blast.out` `ceri_maker1.all.maker.proteins.fasta > ceri_maker1.functional.proteins.fasta`
-`maker_functional_fasta /mnt/lustre/macmaneslab/macmanes/transporters/uniprot_sprot.fasta blast.out ceri_maker1.all.maker.transcripts.fasta > ceri_maker1.functional.transcripts.fasta`
-`maker_functional_gff /mnt/lustre/macmaneslab/macmanes/transporters/uniprot_sprot.fasta blast.out ceri_maker1.gff3 > ceri_maker1.functional.gff3`
-`maker_map_ids --prefix Cerianthus_borealis --justify 6 ceri_maker1.gff3 > ceri_maker1.genome.all.id.map`
-`map_fasta_ids ceri_maker1.genome.all.id.map  ceri_maker1.functional.proteins.fasta`
-`map_gff_ids ceri_maker1.genome.all.id.map  ceri_maker1.functional.gff3`
-`map_fasta_ids ceri_maker1.genome.all.id.map  ceri_maker1.functional.transcripts.fasta`
+    `fasta_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1`
+    `gff3_merge -d ceri_maker1.maker.output/ceri_maker1_master_datastore_index.log -o ceri_maker1.gff3 -n`
+    `sed -i '/^>/! s/-/N/g' ceri_maker1.all.maker.proteins.fasta`
+    `lastal -P38 /mnt/lustre/macmaneslab/macmanes/transporters/swissprot ceri_maker1.all.maker.proteins.fasta -f BlastTab > blast.out`
+    `maker_functional_fasta /mnt/lustre/macmaneslab/macmanes/transporters/uniprot_sprot.fasta blast.out` `ceri_maker1.all.maker.proteins.fasta > ceri_maker1.functional.proteins.fasta`
+    `maker_functional_fasta /mnt/lustre/macmaneslab/macmanes/transporters/uniprot_sprot.fasta blast.out ceri_maker1.all.maker.transcripts.fasta > ceri_maker1.functional.transcripts.fasta`
+    `maker_functional_gff /mnt/lustre/macmaneslab/macmanes/transporters/uniprot_sprot.fasta blast.out ceri_maker1.gff3 > ceri_maker1.functional.gff3`
+    `maker_map_ids --prefix Cerianthus_borealis --justify 6 ceri_maker1.gff3 > ceri_maker1.genome.all.id.map`
+    `map_fasta_ids ceri_maker1.genome.all.id.map  ceri_maker1.functional.proteins.fasta`
+    `map_gff_ids ceri_maker1.genome.all.id.map  ceri_maker1.functional.gff3`
+    `map_fasta_ids ceri_maker1.genome.all.id.map  ceri_maker1.functional.transcripts.fasta`
 
 
 ### Extras - for the second run of MAKER  
