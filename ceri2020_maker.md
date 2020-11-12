@@ -124,3 +124,7 @@ Then I ran the ORP on them using scripts like this "Isarachnanthus_nocturnus_orp
 I stopped the second run because I hadn't spread it across enough nodes, and it will have to run the first steps again too, which is unfortunate, but hopefully it won't take as long as last time.  
 
 So the most up-to-date MAKER run is running from the script "maker_mpi.sh" in the same directory as all the others, but it will be spitting out files with "ceri_maker3" as the prefix, even though it's really more like 2.5.   
+
+*update*  This naming system was incorrect; I didn't realize I would need to keep all output file names (except the log file coming)
+
+Number of proteins at the end: 31,538  
