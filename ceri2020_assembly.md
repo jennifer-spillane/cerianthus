@@ -166,9 +166,11 @@ In the end, I made new genomechunks in exactly the same way as before, and did n
 **8-21-20 update**  
 I am going to polish once more. I thought that I needed both the forward and reverse reads to polish correctly, but apparently this is not the case, and the RNA-seq data for this organism is heavily biased in favor of forward reads. So I'm going to add those in to the mapping step, generate a new bam file (ceri5_sorted.bam). Just to make sure I'm not missing anything, I'm going to add the total DNA reads (ceri_all_reads) and these new RNA-seq read files (CB_all_rna) and pop them in files called "all_dna_and_rna".  
 
+**11-13-20 update**  
+Going to polish again (obviously). A paper came out that had some cerianthid transcriptomes in it, including our species. I tried to use these just for the maker run to get a better annotation, but we're still not where we're hoping to be with busco scores, so I'm going to try to use the RNAseq reads from our species in a polishing step (even though it's not the same individual, it seems like a solid bet that it will make it a bit better anyway). It's definitely worth a shot, even if it doesn't end up amounting to a whole lot of difference. So I added the reads onto the bottom of the "all_dna_and_rna" files (`cat Pachycerianthus_borealis_1.fastq >> /net/storage03/backup/archive/macmanes/reads/cerianthus/all_dna_and_rna1.fq.gz` for both of them), and did another bwa run and pilon run. Busco scores can be found above with the others when it finishes.  
 
 
-#### The current (8-22-20) "final" iteration of this assembly is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri_pol5.fasta  
+#### The current (11-14-20) "final" iteration of this assembly is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/Pachycerianthus_borealis.fa  
 
 
 ### Mapping  
