@@ -84,6 +84,11 @@ C:67.2% [S:66.9%, D:0.3%], F:4.7%, M:28.1%, n:954
 Fifth (ceri_pol5.fasta), run with the Metazoa dataset:  
 C:87.5% [S:86.5%, D:1.0%], F:3.1%, M:9.4%, n:978
 
+Sixth (Pachycerianthus_borealis.fa):  
+Euk - C:83.5%[S:82.5%,D:1.0%],F:6.3%,M:10.2%,n:303  
+Met - C:87.6%[S:86.5%,D:1.1%],F:3.0%,M:9.4%,n:978  
+
+*gorgeous*  
 
 ### Polishing  
 
