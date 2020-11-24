@@ -115,6 +115,13 @@ I'm only planning two MAKER runs, but if the busco scores are quite different be
 
 After I ran the ending stuff (right before "extras", above), I ran busco on the "ceri_maker1.all.maker.proteins.fasta" file, and it was unfortunately, a little lower than I'd hoped. The complete BUSCO score is 53.6% for the euk database, and 55.1% for the met one. Sadly, this is probably because the transcriptomic reads we have for this species are so bad and/or incomplete, and there isn't a ton we can do about that.  
 
+In the final iteration of the assembly, I polished using the reads from the published Pachyceri reads from this paper: Transcriptomic Analysis of Four Cerianthid (Cnidaria, Ceriantharia) Venoms. by Klompen, Macrander, Reitzel, and Stampar (2020). This gave me better scores for the assembly (see ceri2020_assembly.md) and I also used them to inform the maker run (see below), so now our buscos are a little better.  
+
+Eukaryota: C:71.6%[S:52.1%,D:19.5%],F:17.8%,M:10.6%,n:303  
+Metazoa: C:72.1%[S:55.5%,D:16.6%],F:11.2%,M:16.7%,n:978  
+
+It's still not perfect, but I'm much happier with that compared to the first.  
+
 ### Adding in transcriptomes  
 
 Paper just came out (Klompen, Macrander, Reitzel, and Stampar) that published four cerianthid transcriptomes, including ours! So I downloaded all the reads to a new directory (/mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/transcriptomes).  
@@ -123,8 +130,6 @@ Then I ran the ORP on them using scripts like this "Isarachnanthus_nocturnus_orp
 
 I stopped the second run because I hadn't spread it across enough nodes, and it will have to run the first steps again too, which is unfortunate, but hopefully it won't take as long as last time.  
 
-So the most up-to-date MAKER run is running from the script "maker_mpi.sh" in the same directory as all the others, but it will be spitting out files with "ceri_maker3" as the prefix, even though it's really more like 2.5.   
+So the most up-to-date MAKER run is running from the script "maker_mpi.sh" in the same directory as all the others, but it will be spitting out files with "pachyceri_maker" as the prefix.   
 
-*update*  This naming system was incorrect; I didn't realize I would need to keep all output file names (except the log file coming)
-
-Number of proteins at the end: 31,538  
+Number of proteins at the end: 37,856  
