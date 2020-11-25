@@ -19,6 +19,7 @@ I'm going to cat the DNA and RNA reads together for the polishing, and these wil
 ### The Assembly  
 
 I'll use wtdbg2 (which I guess is called Red Bean?) to do this assembly, which happens in two steps.  
+Version: 2.5 (20190621)  
 Cite it here: Ruan, J. and Li, H. (2019) Fast and accurate long-read assembly with wtdbg2. Nat Methods doi:10.1038/s41592-019-0669-3  
 Github here: https://github.com/ruanjue/wtdbg2   
 
