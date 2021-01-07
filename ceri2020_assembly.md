@@ -7,7 +7,7 @@ I made a new directory to do this work in, and it is here: `/mnt/lustre/macmanes
 
 ### The Reads  
 
-Nanopore reads: `/mnt/lustre/macmaneslab/jlh1023/cerianthid/assembly_2020/ceri234.fastq.gz`  
+Nanopore reads: `/net/storage03/backup/archive/macmanes/reads/cerianthus/ceri234.fastq.gz`  
 Illumina reads: `/net/storage03/backup/archive/macmanes/reads/cerianthus/`  
 
 The Illumina reads are a little confusing, but I've figured out what they all are.  
@@ -90,6 +90,21 @@ Euk - C:83.5%[S:82.5%,D:1.0%],F:6.3%,M:10.2%,n:303
 Met - C:87.6%[S:86.5%,D:1.1%],F:3.0%,M:9.4%,n:978  
 
 *gorgeous*  
+
+
+I'm also going to run a python script that Dr. Adam Stuckert gave me that will give me some stats about the reads themselves. I only sequenced using nanopore for this project, despite using some other reads, so I'll just do it on those.  
+
+First, I have to convert my reads to fasta format:  
+`seqtk seq -a /net/storage03/backup/archive/macmanes/reads/cerianthus/ceri234.fastq.gz > ceri_nano_reads.fa`  
+
+Then I can run the script that Adam wrote on my new fasta file:  
+`/mnt/lustre/macmaneslab/shared/scripts/readlengths.py ceri_nano_reads.fa ceri_nano_read_lengths.txt`  
+
+And the script outputs a textfile that has all the lengths of all the reads in it, but also pops out to the screen some stats:  
+Total reads in file: 3572319  
+Total bases in file: 17660674857  
+Average read length: 4943.756382618685  
+Read N50: 7682  
 
 ### Polishing  
 
