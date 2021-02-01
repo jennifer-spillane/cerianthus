@@ -140,3 +140,4 @@ I stopped the second run because I hadn't spread it across enough nodes, and it 
 So the most up-to-date MAKER run is running from the script "maker_mpi.sh" in the same directory as all the others, but it will be spitting out files with "pachyceri_maker" as the prefix.   
 
 Number of proteins at the end: 37,856  
+The final protein prediction file is here: /mnt/lustre/macmaneslab/jlh1023/cerianthid/maker_2020/Pachycerianthus_borealis_proteins.fa  
