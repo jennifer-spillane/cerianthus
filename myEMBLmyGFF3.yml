@@ -1,0 +1,11 @@
+name: EMBLmyGFF3
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+   - python >=3
+   - biopython =1.67
+   - bcbio-gff =0.6.4
+   - numpy <1.16.5
+   - emblmygff3
