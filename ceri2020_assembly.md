@@ -106,6 +106,9 @@ Total bases in file: 17660674857
 Average read length: 4943.756382618685  
 Read N50: 7682  
 
+This means that our coverage is the total bases divided by the bases in the genome assembly. So, 17660674857 / 491647159 = **35.92144**.  
+
+
 ### Polishing  
 
 I'll use the Illumina reads that we have (genomic and transcriptomic) to polish the error-y nanopore reads. I'm also pretty much stealing this procedure from when I did it before, but with the updated assembly.  
