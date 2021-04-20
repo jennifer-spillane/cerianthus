@@ -15,3 +15,26 @@ Another thing to note is that even though the guides start off with the command 
 `table2asn_GFF -M n -J -c w -euk -t template.sbt -gaps-min 10 -l paired-ends -j "[organism=Pachycerianthus borealis]" -i Pachycerianthus_borealis.fa -f pachyceri_maker.functional.gff3 -o Pachycerianthus_borealis.sqn -Z -locus-tag-prefix JQW98`  
 
 It looks like this worked, so I sent the path to the new file (/mnt/lustre/macmaneslab/jlh1023/cerianthid/submit_sra/Pachycerianthus_borealis.sqn, although it did generate other files too) to Dave, and he should be able to upload it to the bioproject with the rest of the info from the same individual.  
+
+
+**Update**  
+The genome assembly didn't get accepted right away because there is a sequence in it that should not be there. So I'm going to remove that sequence, make sure the rest of the genome sequences meet the requirements of genbank, and remake the file.  
+
+The offending sequence is Pachycerianthus_borealis_2734  
+I unwrapped the fasta first, since it previously had annoying linefeeds in all the sequences.  
+`fasta_formatter -w 0 -i Pachycerianthus_borealis.fa -o Pachycerianthus_borealis_unwrap.fa`  
+
+Then I removed the sequence.  
+`sed "/Pachycerianthus_borealis_2734/,+1d" Pachycerianthus_borealis_unwrap.fa > Pachycerianthus_borealis_clean.fa`  
+
+To confirm:  
+`wc -l Pachycerianthus_borealis_unwrap.fa`  11666  
+`wc -l Pachycerianthus_borealis_clean.fa`  11664  
+
+Looks like it got removed, and when I grep for the sequence name it no longer returns any results.  
+
+They also want me to make sure that there aren't a ton of Ns at the ends of sequences, and that they aren't too short. I know we don't have any short seqs in here, and I grepped for "N" and didn't find any matches, so I think we are good there. Now I'll just rerun the command above to remake the sqn file. I renamed the old sqn file to "Pachycerianthus_borealis_v1.sqn" so that I can keep the same output file name.     
+`table2asn_GFF -M n -J -c w -euk -t template.sbt -gaps-min 10 -l paired-ends -j "[organism=Pachycerianthus borealis]" -i Pachycerianthus_borealis_clean.fa -f pachyceri_maker.functional.gff3 -o Pachycerianthus_borealis.sqn -Z -locus-tag-prefix JQW98`  
+
+Note that this process is submitted as a job with this script: /mnt/oldhome/macmaneslab/jlh1023/cerianthid/submit_sra/conversion.sh 
+
