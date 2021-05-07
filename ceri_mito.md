@@ -125,3 +125,16 @@ Threshold = 8000; lines = 115
 At 8500 and 9000 there aren't any, so I'll take a closer look at the ones I have.  
 
 Unfortunately they look like they are from a ton of different contigs, so this is probably not going to be overly helpful for mito contig isolation. I also ran it with the threshold at 8100 (the largest one I could get results for) and it returned 3 contigs, none of which matches the ones I found blasting, so I think this is a dead end.  
+
+
+
+
+### Trying out GetOrganelle  
+
+Dave recently told me about a new program called GetOrganelle, and I thought I would play with it and see if I can pull out the mito genome of our cerianthid this way.  
+
+To use on premise:  
+`module load anaconda/colsa`  
+`conda find get_organelle_from_assembly.py -a`  
+
+This worked, but it looks like it requires some file types I've never heard of, so I'll have to look more into those.
