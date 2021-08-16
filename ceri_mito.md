@@ -136,5 +136,24 @@ Dave recently told me about a new program called GetOrganelle, and I thought I w
 To use on premise:  
 `module load anaconda/colsa`  
 `conda find get_organelle_from_assembly.py -a`  
+or
+`conda activate getorganelle-1.7.4.1`  
 
-This worked, but it looks like it requires some file types I've never heard of, so I'll have to look more into those.
+This is the GetOrganelle example script, so I know I need at least these parts.  
+`get_organelle_from_reads.py -1 forward.fq -2 reverse.fq -o plastome_output -R 15 -k 21,45,65,85,105 -F embplant_pt`  
+
+This is the script I will try first:  
+`get_organelle_from_reads.py -1 /net/storage03/backup/archive/macmanes/reads/cerianthus/ceri_reads_1.fastq.gz -2 /net/storage03/backup/archive/macmanes/reads/cerianthus/ceri_reads_2.fastq.gz -u /net/storage03/backup/archive/macmanes/reads/cerianthus/ceri234.fastq.gz -o getorganelle_output -F animal_mt`  
+
+I immediately got an error "ERROR: default animal_mt database not added yet!", so I used their supplied command to install that database.  
+`get_organelle_config.py -a animal_mt`  
+
+When I ran it again, I got an error asking me to check the integrity of my input reads. I'm going to try it just with the illumina ones, to see if the nanopore ones are the problem.  
+
+This time it errored because my output directory already existed. Running again. And now I'm still getting the error about my reads. I'll try just the nanopore ones and see if they are any better.  
+`get_organelle_from_reads.py -u /net/storage03/backup/archive/macmanes/reads/cerianthus/ceri234.fastq.gz -o getorganelle_output -F animal_mt`  
+
+Seems to be running! Those sketchy as Illumina reads appear to have struck again. We'll see if these nanopore ones pan out.  
+
+
+
